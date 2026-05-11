@@ -16,7 +16,7 @@ export function SiteHeader() {
     <header className={`site-header${isHome ? " site-header--ghost" : ""}`}>
       <div className="site-frame site-header__inner">
         <NavLink className="brand-mark" to="/">
-          <span className="brand-mark__name">周佳琪</span>
+          <span className="brand-mark__name">周嘉立</span>
           <span className="brand-mark__role">AI 产品经理</span>
         </NavLink>
 
