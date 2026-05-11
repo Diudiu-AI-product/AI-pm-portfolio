@@ -12,7 +12,7 @@
 ## 在线访问
 
 - GitHub Profile: [Diudiu-AI-product](https://github.com/Diudiu-AI-product)
-- Portfolio Website: [aipmportfolio-3oj0xl7tx-1024557279-8020s-projects.vercel.app](https://aipmportfolio-3oj0xl7tx-1024557279-8020s-projects.vercel.app)
+- Portfolio Website: [aipmportfolio.vercel.app](https://aipmportfolio.vercel.app/)
 
 ## 这个仓库包含什么
 
