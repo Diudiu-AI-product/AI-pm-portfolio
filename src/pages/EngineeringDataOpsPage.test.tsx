@@ -18,7 +18,7 @@ test("renders the engineering data ops case study sections", () => {
   expect(screen.getByRole("heading", { name: "Core Capability Stack" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "Outcomes" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "What I Learned" })).toBeInTheDocument();
-  expect(screen.getAllByText("自然语言取数").length).toBeGreaterThan(0);
-  expect(screen.getAllByText("异常归因").length).toBeGreaterThan(0);
+  expect(screen.getAllByText("Schema 语义映射").length).toBeGreaterThan(0);
+  expect(screen.getAllByText("灰度迁移").length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: "返回首页" })).toBeInTheDocument();
 });

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { SiteShell } from "../components/layout/SiteShell";
 import { ProjectVisual } from "../components/ui/ProjectCard";
 import { Section } from "../components/ui/Section";
@@ -23,7 +23,7 @@ function getPromptLabDisplayTitle(imageSrc: string | undefined, fallbackTitle: s
   return decodedName.replace(/[-_]+/g, " ").trim() || fallbackTitle;
 }
 
-type WorkflowLoopTheme = "civilx" | "dataops";
+type WorkflowLoopTheme = "civilx" | "dataops" | "travel" | "service";
 
 function WorkflowLoopVisual({
   theme,
@@ -33,7 +33,7 @@ function WorkflowLoopVisual({
 }: {
   theme: WorkflowLoopTheme;
   eyebrow: string;
-  title: string;
+  title: ReactNode;
   nodes: string[];
 }) {
   return (
@@ -57,7 +57,7 @@ function CivilXCaseStudyVisual() {
     <WorkflowLoopVisual
       theme="civilx"
       eyebrow="AI Workflow"
-      title="Complex Task Solver"
+      title="复杂任务闭环求解"
       nodes={["\u8d44\u6599\u89e3\u6790", "\u77e5\u8bc6\u589e\u5f3a", "\u591a\u667a\u80fd\u4f53", "\u4eff\u771f\u8c03\u7528", "\u7ed3\u679c\u6821\u6838"]}
     />
   );
@@ -67,9 +67,43 @@ function DataOpsCaseStudyVisual() {
   return (
     <WorkflowLoopVisual
       theme="dataops"
-      eyebrow="LUI Workflow"
-      title="Operational Insight"
-      nodes={["\u7edf\u4e00\u89c6\u56fe", "NL2SQL", "\u5f02\u5e38\u5f52\u56e0", "\u62a5\u544a\u751f\u6210", "Semantic Cache"]}
+      eyebrow="GovTech Workflow"
+      title="运营洞察中枢"
+      nodes={["组件化建模", "Schema 映射", "NL2SQL", "A/B Test", "灰度发布"]}
+    />
+  );
+}
+
+function TravelAssistantCaseStudyVisual() {
+  return (
+    <WorkflowLoopVisual
+      theme="travel"
+      eyebrow="差旅工作流"
+      title={
+        <>
+          企业差旅
+          <br />
+          助手
+        </>
+      }
+      nodes={["制度问答", "行程规划", "合规提醒", "票据解析", "依据回溯"]}
+    />
+  );
+}
+
+function AutoAgentCaseStudyVisual() {
+  return (
+    <WorkflowLoopVisual
+      theme="service"
+      eyebrow="客服工作流"
+      title={
+        <>
+          电商智能
+          <br />
+          客服
+        </>
+      }
+      nodes={["会话队列", "回复建议", "风险识别", "人工接管", "策略发布"]}
     />
   );
 }
@@ -83,12 +117,32 @@ function SelectedWorkVisual({ project }: { project: (typeof projects)[number] })
     return <DataOpsCaseStudyVisual />;
   }
 
+  if (project.slug === "diudiu-enterprise-travel-assistant") {
+    return <TravelAssistantCaseStudyVisual />;
+  }
+
+  if (project.slug === "auto-agent") {
+    return <AutoAgentCaseStudyVisual />;
+  }
+
   return <ProjectVisual type={project.signal ?? "document"} />;
 }
 
 function SelectedWorkBody({ project }: { project: (typeof projects)[number] }) {
-  if (project.slug === "civil-x" || project.slug === "engineering-data-ops") {
-    const rolelineLabel = project.slug === "civil-x" ? "My Role" : "Focus";
+  if (
+    project.slug === "civil-x" ||
+    project.slug === "engineering-data-ops" ||
+    project.slug === "diudiu-enterprise-travel-assistant" ||
+    project.slug === "auto-agent"
+  ) {
+    const rolelineLabel =
+      project.slug === "civil-x"
+        ? "我的角色"
+        : project.slug === "engineering-data-ops"
+          ? "能力定位"
+          : project.slug === "auto-agent"
+            ? "能力定位"
+            : "能力定位";
 
     return (
       <span className="selected-work-card__body selected-work-card__body--compact-case">
@@ -278,6 +332,7 @@ function SelectedWorkArrowIcon({ direction }: { direction: "left" | "right" }) {
 export default function HomePage() {
   const [wechatOpen, setWechatOpen] = useState(false);
   const [activeProject, setActiveProject] = useState<(typeof projects)[number] | null>(null);
+  const [activeFeaturedPage, setActiveFeaturedPage] = useState(0);
   const [activePromptLabEntry, setActivePromptLabEntry] = useState<(typeof promptLabEntriesContent)[number] | null>(
     null
   );
@@ -295,26 +350,22 @@ export default function HomePage() {
     .sort(
       (left, right) => (left.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (right.featuredOrder ?? Number.MAX_SAFE_INTEGER)
     );
+  const featuredProjectPages = [featuredProjects.slice(0, 2), featuredProjects.slice(2)].filter((page) => page.length > 0);
+  const visibleFeaturedProjects = featuredProjectPages[activeFeaturedPage] ?? [];
   const promptLabLoop = [...promptLabEntriesContent, ...promptLabEntriesContent];
   const activeModal = activeProject ? "project" : activePromptLabEntry ? "prompt-lab" : null;
   const activeStudy = activeProject ? caseStudies[activeProject.slug] : null;
 
-  const openSelectedWorkProject = (direction: "previous" | "next") => {
-    if (!featuredProjects.length) {
+  const openSelectedWorkPage = (direction: "previous" | "next") => {
+    if (featuredProjectPages.length <= 1) {
       return;
     }
 
-    const currentIndex = activeProject
-      ? featuredProjects.findIndex((project) => project.slug === activeProject.slug)
-      : direction === "next"
-        ? -1
-        : 0;
-    const nextIndex =
+    setActiveFeaturedPage((currentPage) =>
       direction === "next"
-        ? (currentIndex + 1 + featuredProjects.length) % featuredProjects.length
-        : (currentIndex - 1 + featuredProjects.length) % featuredProjects.length;
-
-    setActiveProject(featuredProjects[nextIndex]);
+        ? (currentPage + 1) % featuredProjectPages.length
+        : (currentPage - 1 + featuredProjectPages.length) % featuredProjectPages.length
+    );
   };
 
   const getPromptLabStep = () => {
@@ -595,8 +646,11 @@ export default function HomePage() {
           title="代表项目"
           intro="先看最能体现我在 AI 产品定义、方案规划、复杂协同和落地推进能力的两条真实案例。"
         >
-          <div className="selected-work-grid" aria-label="代表项目卡片">
-            {featuredProjects.map((project) => (
+          <div
+            className={`selected-work-grid${visibleFeaturedProjects.length === 1 ? " selected-work-grid--single" : ""}`}
+            aria-label="代表项目卡片"
+          >
+            {visibleFeaturedProjects.map((project) => (
               <button
                 key={project.slug}
                 type="button"
@@ -606,7 +660,9 @@ export default function HomePage() {
               >
                 <span className="selected-work-card__topline">
                   <span className="selected-work-card__eyebrow">{project.eyebrow}</span>
-                  <span className="selected-work-card__badge">Live Case</span>
+                  <span className="selected-work-card__badge">
+                    {project.category === "production" ? "正式案例" : "原型案例"}
+                  </span>
                 </span>
                 <span className="selected-work-card__visual selected-work-card__visual--cover" aria-hidden="true">
                   <SelectedWorkVisual project={project} />
@@ -616,22 +672,22 @@ export default function HomePage() {
             ))}
 
           </div>
-          {featuredProjects.length > 1 ? (
+          {featuredProjectPages.length > 1 ? (
             <div className="selected-work-controls" aria-label="代表项目导航">
               <div className="selected-work-controls__actions">
                 <button
                   type="button"
                   className="selected-work-controls__button selected-work-controls__button--secondary"
-                  aria-label="打开上一个代表项目"
-                  onClick={() => openSelectedWorkProject("previous")}
+                  aria-label="打开上一页代表项目"
+                  onClick={() => openSelectedWorkPage("previous")}
                 >
                   <SelectedWorkArrowIcon direction="left" />
                 </button>
                 <button
                   type="button"
                   className="selected-work-controls__button"
-                  aria-label="打开下一个代表项目"
-                  onClick={() => openSelectedWorkProject("next")}
+                  aria-label="打开下一页代表项目"
+                  onClick={() => openSelectedWorkPage("next")}
                 >
                   <SelectedWorkArrowIcon direction="right" />
                 </button>

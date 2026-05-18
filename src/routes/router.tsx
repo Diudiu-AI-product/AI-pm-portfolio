@@ -1,6 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import CivilXPage from "../pages/CivilXPage";
+import DiudiuEnterpriseTravelAssistantPage from "../pages/DiudiuEnterpriseTravelAssistantPage";
 import EngineeringDataOpsPage from "../pages/EngineeringDataOpsPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
@@ -16,6 +17,10 @@ export const routes: RouteObject[] = [
   {
     path: "/projects/engineering-data-ops",
     element: <EngineeringDataOpsPage />
+  },
+  {
+    path: "/projects/diudiu-enterprise-travel-assistant",
+    element: <DiudiuEnterpriseTravelAssistantPage />
   },
   {
     path: "*",

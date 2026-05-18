@@ -18,7 +18,7 @@ test("renders the redesigned Civil-X case study page", () => {
   expect(screen.getByRole("heading", { name: "Outcome And Evidence" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "What I Owned" })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "What I Learned" })).toBeInTheDocument();
-  expect(screen.getAllByText("多模态感知").length).toBeGreaterThan(0);
-  expect(screen.getAllByText("评测与推理路由").length).toBeGreaterThan(0);
+  expect(screen.getAllByText("文档结构化抽取").length).toBeGreaterThan(0);
+  expect(screen.getAllByText("评测与反馈闭环").length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: "返回首页" })).toBeInTheDocument();
 });

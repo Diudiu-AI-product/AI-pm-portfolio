@@ -73,7 +73,7 @@ export default function EngineeringDataOpsPage() {
         <Section
           eyebrow="Outcomes"
           title="Outcomes"
-          intro="这个项目的价值，不只是把查询入口换成自然语言，而是把数据获取、异常识别和经营表达这条分析链路缩短并稳定下来。"
+          intro="这个项目的价值，不只是补一个智能取数入口，而是把高变更业务的系统适配、决策响应和迁移上线都放进可持续优化的产品链路。"
         >
           <div className="metric-grid">
             {study.metrics.map((metric) => (

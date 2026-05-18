@@ -46,7 +46,7 @@ export default function CivilXPage() {
 
               <div className="case-study-hero__quote">
                 <p className="case-study-hero__quote-label">Core Judgement</p>
-                <strong>This was not a QA problem. It was a workflow orchestration problem.</strong>
+                <strong>This was not just a QA problem. It required a controllable workflow for engineering reasoning.</strong>
                 <p>{study.backgroundIntro}</p>
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function CivilXPage() {
         <Section
           eyebrow="Framing"
           title="Why This Had To Be A Workflow Product"
-          intro="复杂工程场景的关键，不是让模型答得像专家，而是让它能稳定进入任务链路并完成可验证的闭环。"
+          intro="复杂工程场景的关键，不是让模型像专家一样回答，而是让它在长文档、专业知识和多步推理里依然稳定输出可验证结果。"
         >
           <div className="case-study-section-grid">
             <article className="surface-card case-study-story-card">
@@ -92,7 +92,7 @@ export default function CivilXPage() {
         <Section
           eyebrow="Judgement"
           title="My Product Framing"
-          intro="我在这个项目里的核心工作，是先定义问题边界，再决定哪些 AI 能力值得被产品化。"
+          intro="我在这个项目里的核心工作，是先判断问题卡在文档、检索、推理还是对齐，再决定哪些 AI 能力要被产品化为稳定链路。"
         >
           <div className="case-study-card-grid">
             {study.decisions.map((item) => (
@@ -108,7 +108,7 @@ export default function CivilXPage() {
         <Section
           eyebrow="System"
           title="Closed-Loop System Design"
-          intro="最终设计不是单一模型能力，而是一条从资料解析到结果校核、从任务编排到持续评测的闭环系统。"
+          intro="最终设计不是单一模型能力，而是一条从文档结构化抽取、证据检索、复杂推理到评测反馈持续迭代的闭环系统。"
         >
           <div className="case-study-system-grid">
             {systemCards.map((item) => (
@@ -124,7 +124,7 @@ export default function CivilXPage() {
         <Section
           eyebrow="Results"
           title="Outcome And Evidence"
-          intro="结果不只体现在模型效果上，更体现在复杂工程任务的效率、稳定性和可持续优化能力。"
+          intro="结果不只体现在单点指标上，更体现在检索可信度、复杂推理准确性和模型可持续迭代能力上。"
         >
           <div className="metric-grid">
             {study.metrics.map((metric) => (
